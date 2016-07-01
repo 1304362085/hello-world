@@ -1,0 +1,37 @@
+    虽然我不懂各种包里的源码，不过我决定通过实践来获得知识--模仿公司框架搭建环境，来学习其中的各种知识，比较零碎，都是看到什么构建什么，
+仅仅是学习罢了：
+    今天先来第一个：ibatis.generator，与之相应的还有一个Abator，都是通过配置路径来生成Dao、实体类以及增删改查的基本语句，我准备写一个commons来进行统一的管理，比如说注入sqlMapclient，上代码：
+   <?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE generatorConfiguration PUBLIC "-//mybatis.org//DTD MyBatis Generator Configuration 1.0//EN" "http://mybatis.org/dtd/mybatis-generator-config_1_0.dtd" >
+<generatorConfiguration >
+	<properties resource="java/signFunction/config/myBatis.properties"/>
+	<classPathEntry location="${classPath}"/>
+  <context id="federal_generator" >
+    <jdbcConnection driverClass="${mysql.dc}" connectionURL="${mysql.URL}" userId="${mysql.user}" password="${mysql.pwd}" />
+    <javaModelGenerator targetPackage="java.signFunction.entity" targetProject="Federal_project" />
+    <sqlMapGenerator targetPackage="java.signFunction.sqlMap" targetProject="Federal_project" />
+    <javaClientGenerator targetPackage="java.signFunction.Dao" targetProject="Federal_project" type="XMLMAPPER" />
+    <table tableName="${generator.tableName}" 
+    	domainObjectName="${domainName}"	
+    	enableCountByExample="false"
+    	enableDeleteByExample="false" 
+    	enableSelectByExample="false"  
+        enableUpdateByExample="false"
+    >
+	<ignoreColumn column="CREATED_BY"/>
+	<ignoreColumn column="UPDATED_BY"/>	
+    </table>
+  </context>
+</generatorConfiguration>
+
+properties文件命名并不规范：
+#驱动包位置
+classPath=E:/JAVASOFT/Workspace/Federal_project/WebContent/WEB-INF/lib/mysql-connector-java-5.1.7-bin.jar
+#mysql的driverClass
+mysql.dc=com.mysql.jdbc.Driver
+#mysql的连接URL
+mysql.URL=jdbc:mysql://localhost:3306/signFunction
+#用户名
+mysql.user=root
+#密码
+mysql.pwd=8426
