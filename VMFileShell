@@ -1,3 +1,111 @@
 today, I connect my computer with the VM,so I want to create a little shell order;
 
 cd /mnp/hgjl/software/linux
+
+发现一个在linux系统上安装的jdk的地址等，转载自http://blog.csdn.net/wolaiye320/article/details/51788707
+
+这篇文章着重讲解tomcat7的安装，首先需要下载tomcat包和相应的jdk，如果你的系统是32位，那么下载x86的jdk，如果是64位的系统，那么下载X64的JDK。具体下载地址如下。
+Tomcat 7：
+http://mirror.bjtu.edu.cn/apache/tomcat/tomcat-7/v7.0.22/bin/apache-tomcat-7.0.22.tar.gz
+JDK 1.7（x86）：
+http://download.oracle.com/otn-pub/java/jdk/7u1-b08/jdk-7u1-linux-i586.rpm
+JDK 1.7（X64）：
+http://download.oracle.com/auth/otn-pub/java/jdk/7u1-b08/jdk-7u1-linux-x64.tar.gz?e=1320470032&h=786351a82836b064c25af90e614d23fb
+ 
+1、   查看系统版本
+
+ # uname –a //是64位系统,那么我们选择64位的JDK
+Linux 2.6.32-71.el6.x86_64 #1 SMP Fri May 20 03:51:51 BST 2011 x86_64 x86_64 x86_64 GNU/Linux
+1
+2
+ # uname –a //是64位系统,那么我们选择64位的JDK
+Linux 2.6.32-71.el6.x86_64 #1 SMP Fri May 20 03:51:51 BST 2011 x86_64 x86_64 x86_64 GNU/Linux
+2、   下载tomcat7和jdk1.7
+Tarbag专门放源码包，software专门放解压后的软件包
+
+# mkdir /usr/local/src/tarbag
+# mkdir /usr/local/src/software
+
+# cd /usr/local/src/tarbag
+# wget http://mirror.bjtu.edu.cn/apache/tomcat/tomcat-7/v7.0.22/bin/apache-tomcat-7.0.22.tar.gz
+# wgethttp://download.oracle.com/auth/otn-pub/java/jdk/7u1-b08/jdk-7u1-linux-x64.tar.gz
+1
+2
+3
+4
+5
+6
+# mkdir /usr/local/src/tarbag
+# mkdir /usr/local/src/software
+ 
+# cd /usr/local/src/tarbag
+# wget http://mirror.bjtu.edu.cn/apache/tomcat/tomcat-7/v7.0.22/bin/apache-tomcat-7.0.22.tar.gz
+# wgethttp://download.oracle.com/auth/otn-pub/java/jdk/7u1-b08/jdk-7u1-linux-x64.tar.gz
+3、   安装jdk(配置java环境)
+
+# tar -xzvf jdk-7u1-linux-x64.tar.gz
+# mv jdk1.7.0_01/ /usr/local/java
+1
+2
+# tar -xzvf jdk-7u1-linux-x64.tar.gz
+# mv jdk1.7.0_01/ /usr/local/java
+配置java环境
+
+# vi /etc/profile
+加上以下信息
+export JAVA_HOME=/usr/local/java
+CLASSPATH=/usr/local/java/lib/dt.jar:/usr/local/java/lib/tools.jar
+PATH=/usr/local/java/bin:$PATH
+export PATH JAVA_HOME CLASSPATH
+1
+2
+3
+4
+5
+6
+# vi /etc/profile
+加上以下信息
+export JAVA_HOME=/usr/local/java
+CLASSPATH=/usr/local/java/lib/dt.jar:/usr/local/java/lib/tools.jar
+PATH=/usr/local/java/bin:$PATH
+export PATH JAVA_HOME CLASSPATH
+查看是否成功
+
+# source /etc/profile
+# java  -version //看到1.7的字样说明安装成功了
+java version "1.7.0_01"
+Java(TM) SE Runtime Environment (build 1.7.0_01-b08)
+Java HotSpot(TM) 64-Bit Server VM (build 21.1-b02, mixed mode)
+1
+2
+3
+4
+5
+# source /etc/profile
+# java  -version //看到1.7的字样说明安装成功了
+java version "1.7.0_01"
+Java(TM) SE Runtime Environment (build 1.7.0_01-b08)
+Java HotSpot(TM) 64-Bit Server VM (build 21.1-b02, mixed mode)
+4、   安装tomcat 7
+
+# tar –xzvf  apache-tomcat-7.0.22.tar.gz
+# mv apache-tomcat-7.0.22 /usr/local/tomcat7
+1
+2
+# tar –xzvf  apache-tomcat-7.0.22.tar.gz
+# mv apache-tomcat-7.0.22 /usr/local/tomcat7
+5、   启动关闭tomcat7
+启动
+
+# /usr/local/tomcat7/bin/startup.sh
+1
+# /usr/local/tomcat7/bin/startup.sh
+关闭
+
+# /usr/local/tomcat7/bin/shutdown.sh
+1
+# /usr/local/tomcat7/bin/shutdown.sh
+6、   开启tomcat测试
+打开http://192.168.1.210:8080
+
+转载请注明本文出处：http://www.infocool.net/kb/Tomcat/201606/158552.html
