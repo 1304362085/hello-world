@@ -1,0 +1,137 @@
+AntCompile
+
+
+eclipse中ant打war包
+注：有可能打包失败是eclipse没有集成的原因，用我自己的eclipse可以，同事那就有可能打包失败，一定要注意这点。
+1、先在eclipse中集成或自己安装解压ant，总之有可用的ant就好。
+2、照下图新建extlib（比如servlet-api.jar是tomcat里的包，ant打包需要但是引用不到的包都放入extlib文件夹），war（打成功的war包的位置）文件夹。
+
+
+
+
+3、编写build.xml文件，内容如下：  
+
+<?xml version="1.0" encoding="UTF-8"?>
+
+<project name="GBEMSSystemMGR" default="deploy" basedir="."><!--GBEMSSystemMGR是项目名称-->
+    
+    
+
+    <!-- 判断当前系统是windows还是linux  -->
+    <condition property="isWindows">
+        <os family="windows" />
+    </condition>
+
+    <condition property="isLinux">
+        <os family="unix" />
+    </condition>
+
+    <!-- 定义了一些变量 -->    
+    <property name="resource.dir" location="${basedir}/resources" />
+    <property name="src.dir" location="${basedir}/src" />
+    <property name="web.dir" location="${basedir}/WebRoot" />
+    <property name="web.web-inf.dir" location="${web.dir}/WEB-INF" />
+    <property name="lib.dir" location="${web.web-inf.dir}/lib" />
+    <property name="classes.dir" location="${web.web-inf.dir}/classes" />
+    <property name="ext.dir" location="${basedir}/extlib" />
+
+    
+    <!--定义一个时间戳-->
+    <tstamp prefix="backup">
+        <format property="time" pattern="yyyy-MM-dd.HH.mm.ss" />
+    </tstamp>
+
+    
+
+    <!--path表示一个文件或路径名列表-->
+    <path id="classpath">
+        <!--Fileset 数据类型定义了一组文件-->
+        <fileset dir="${lib.dir}">
+        <!--该文件夹下所有以.jar结尾的文件-->
+            <include name="*.jar" />
+        </fileset>
+        <!--Fileset 数据类型定义了一组文件-->
+        <fileset dir="${ext.dir}">
+        <!--该文件夹下所有以.jar结尾的文件-->
+            <include name="*.jar" />
+        </fileset>
+        
+    </path>
+
+    <property name="war.file.path" location="${basedir}/war" />
+    <property name="war.file.name" value="GBEMSSystemMGR.war" />
+
+
+    <!-- ================================= 
+          target: deploy              
+         ================================= -->
+    <target name="deploy" depends="clean-classes-dir,copy-resource-to-classes,full-compile,war-app,deploy-under-windows">
+        <echo>now you can start tomcat.</echo>
+    </target>
+
+
+    <target name="deploy-under-windows" if="isWindows">
+        <!-- echo 往控制台输出一段话 -->
+        <echo>一般使用Eclipse集成的tomcat进行测试，省略</echo>
+
+    </target>
+
+
+    <!-- ================================= 
+              target: war-app              
+             ================================= -->
+    <target name="war-app">
+        <echo>make War ..</echo>
+        <mkdir dir="${war.file.path}" />
+            <!--将指定文件打成war包-->
+        <war warfile="${war.file.path}/${war.file.name}" webxml="${web.web-inf.dir}/web.xml">
+            <lib dir="${lib.dir}" />
+            <classes dir="${classes.dir}" />
+            <fileset dir="${web.dir}">
+            </fileset>
+        </war>
+        <echo>War Success : ${war.file.path}/${war.file.name}</echo>
+    </target>
+
+    <!-- ================================= 
+              target: full-compile              
+             ================================= -->
+    <target name="full-compile" description="description">
+        <echo>start compile.</echo>
+            <!--编译，其中refild标签是引用之前定义的name为classpath的path文件或路径-->
+        <javac encoding="utf-8" srcdir="${src.dir}" destdir="${classes.dir}" includeAntRuntime="false"  debug="true" >
+            <classpath refid="classpath" />
+        </javac>
+        <javac encoding="utf-8" srcdir="${resource.dir}" destdir="${classes.dir}" includeAntRuntime="false"   debug="true">
+                    <classpath refid="classpath" />
+        </javac>
+        <echo>full-compile successfully.</echo>
+    </target>
+
+    
+
+    <!-- copy src/**/*.(xml|properties ...) to classes dir -->
+    <target name="copy-resource-to-classes">
+        <!--将指定文件拷贝到指定目录-->
+        <copy todir="${classes.dir}">
+            <fileset dir="${src.dir}">
+                <!-- 表示除了以.java结尾的文件都包含-->
+                <exclude name="**/*.java" />
+            </fileset>
+        </copy>
+        <copy todir="${classes.dir}">
+            <fileset dir="${resource.dir}">
+                <!-- 表示除了以.java结尾的文件都包含-->
+                <exclude name="**/*.java" />
+            </fileset>
+        </copy>
+    </target>
+
+    <!-- 删除整个classes目录 -->
+    <target name="clean-classes-dir">
+        <delete dir="${classes.dir}" />
+        <echo>${classes.dir} deleted.</echo>
+    </target>
+
+    
+</project>
