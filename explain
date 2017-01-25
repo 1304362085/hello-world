@@ -1,0 +1,20 @@
+java.lang.IllegalStateException: Cannot initialize context because there is already a root application context present - check whether you have multiple ContextLoader* definitions in your web.xml!
+	at org.springframework.web.context.ContextLoader.initWebApplicationContext(ContextLoader.java:277)
+	at org.springframework.web.context.ContextLoaderListener.contextInitialized(ContextLoaderListener.java:106)
+	at org.apache.catalina.core.StandardContext.listenerStart(StandardContext.java:5097)
+	at org.apache.catalina.core.StandardContext.startInternal(StandardContext.java:5615)
+	at org.apache.catalina.util.LifecycleBase.start(LifecycleBase.java:147)
+	at org.apache.catalina.core.ContainerBase.addChildInternal(ContainerBase.java:899)
+	at org.apache.catalina.core.ContainerBase.addChild(ContainerBase.java:875)
+	at org.apache.catalina.core.StandardHost.addChild(StandardHost.java:652)
+	at org.apache.catalina.startup.HostConfig.deployDescriptor(HostConfig.java:679)
+	at org.apache.catalina.startup.HostConfig$DeployDescriptor.run(HostConfig.java:1966)
+	at java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:511)
+	at java.util.concurrent.FutureTask.run(FutureTask.java:266)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1142)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:617)
+	at java.lang.Thread.run(Thread.java:745)
+  
+  个人环境是tomcat7.0+spring4学习，web.xml文件如下：
+  
+  
