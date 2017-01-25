@@ -15,6 +15,14 @@ java.lang.IllegalStateException: Cannot initialize context because there is alre
 	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:617)
 	at java.lang.Thread.run(Thread.java:745)
   
-  个人环境是tomcat7.0+spring4学习，web.xml文件如下：
+  个人环境是tomcat7.0+spring4学习，web.xml文件如在前边贴出
   
+  在启动时会报如上的错误,根本原因在listener上，如hibernate社区的一位大神的回答，原文如下
   
+  You should remove the ContextLoaderListener from the web.xml. The following is from the Tapestry Spring integration page.
+
+Please omit the part about creating a ContextLoaderListener: this is now done automatically by Tapestry.
+  
+  在某个版本开始或者说spring4继承了Tapestry，它会自动帮我们处理这些问题所以就不需要单独配置了
+  
+  由于好奇心又去搜了一下Tapestry，也是Apache旗下的一款开发app应用的小框架，具体后边再研究，不扩展
