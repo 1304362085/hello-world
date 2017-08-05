@@ -1,0 +1,23 @@
+最近想自己搞个mongoDB写个爬虫玩然而困难重重，现在把经验总结一下：
+1.mongoDB在3.0以上就不支持32位系统跑了，而且配置的时候不可以用mongo:/里边的mongo:option，必须使用mongoClient和dbFactory来配置
+需要加入：
+http://www.springframework.org/schema/data/repository
+     http://www.springframework.org/schema/data/repository/spring-repository-1.5.xsd
+否则会解析错误。
+
+2.关于jar包的问题，需要会报classNotFound
+java.lang.NoClassDefFoundError: org/springframework/data/util/CloseableIterator
+在StackOverflow上的大神给出答案：
+
+You need to clean up your classpath. Remove spring-data-commons-core, org.springframework.data.core, 
+and upgrade the version of spring-data-commons to 1.11.1.RELEASE. 
+You maybe want to get rid of org.springframework.transaction_3.0.5.RELEASE 
+as all other Spring Framework artifacts refer to version 4.2.4.RELEASE
+
+Remaining problems were not related to CloseableIterator class 
+and the main point to understand over here is that
+whenever we are using the external jars we need to refer the latest stable release of the jars 
+which has the required class files for which the NoClassDefinitionFoundException is thrown. 
+Thanks a lot Stackoverflow for this nice forum!!
+
+千万要注意这个，坑的头都疼
