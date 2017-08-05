@@ -9,7 +9,52 @@ http://www.springframework.org/schema/data/repository
 java.lang.NoClassDefFoundError: org/springframework/data/util/CloseableIterator
 在StackOverflow上的大神给出答案：
 
-You need to clean up your classpath. Remove spring-data-commons-core, org.springframework.data.core, 
+*
+up vote
+0
+down vote
+CloseableIterator belongs to the Spring Data Core jar file.
+
+http://mvnrepository.com/artifact/org.springframework.data/spring-data-commons-core
+
+Add this jar to your project if it cannot be found.
+
+Edit:
+
+Sorry posted the wrong link.
+
+Have you tried the following jar file
+
+http://mvnrepository.com/artifact/org.springframework.data/spring-data-commons
+
+shareimprove this answer
+edited Jun 7 '16 at 10:20
+answered Jun 7 '16 at 9:46
+
+blairmeister
+619414
+  	 	
+Hi Blairmeister, I have done that already. But this jar doesnot have the mentioned class file. 
+spring-data-commons-core-1.4.0.RELEASE.jar – Rishi Jun 7 '16 at 10:10 
+  	 	
+I tried to change the jars as well – Rishi Jun 7 '16 at 16:37
+  	 	
+@Rishi You need to clean up your classpath. Remove spring-data-commons-core, org.springframework.data.core, 
+and upgrade the version of spring-data-commons to 1.11.1.RELEASE. You maybe want to get rid of org.springframework.
+transaction_3.0.5.RELEASE as all other Spring Framework artifacts refer to version 4.2.4.RELEASE. – mp911de Jun 8 '16 at 6:46
+  	 	
+@blairmeister point noted. I am on it now...Thanks for looking into it. I will update you in few minutes once done. Thanks again! 
+– Rishi Jun 8 '16 at 7:05
+  	 	
+Hi @blairmeister That exception is resolved but new exception has occurred related to logger jar nested exception is 
+org.springframework.beans.factory.BeanCreationException:
+Could not autowire field: private org.springframework.data.mongodb.core.MongoTemplate com.miet.kmpro.dao.UsersRepository.mongoTemplate; 
+nested exception is java.lang.NoClassDefFoundError: org/slf4j/Logger Kindly suggest the jar file to solve this problem with version. 
+Also how did you manager to find the exact version of the commons jar. Thanks in advance for your help :-) – Rishi Jun 8 '16 at 8:24
+
+
+
+*You need to clean up your classpath. Remove spring-data-commons-core, org.springframework.data.core, 
 and upgrade the version of spring-data-commons to 1.11.1.RELEASE. 
 You maybe want to get rid of org.springframework.transaction_3.0.5.RELEASE 
 as all other Spring Framework artifacts refer to version 4.2.4.RELEASE
