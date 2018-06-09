@@ -1,1 +1,8 @@
-asdf
+建立root用户
+重启进入恢复模式关闭rootless，使root具有最高权限：csrutil enable
+为现有用户授权sudo chown -R ${whoami}:wheel /usr/local
+执行brew install
+brew update
+查看已安装软件brew list
+安装python:brew install python
+建立软连接 ln -s /usr/local/python3.6/bin/python3.6 ~/
