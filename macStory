@@ -1,0 +1,14 @@
+写一下使用brew配置过程
+为安装py，便携神经网络，因此使用mac尝试，mac上的软件管理系统为brew，但一直安装失败现在解决了写一下过程：
+
+首用户创建root用户
+直接使用root用户的话mac不让，会报Operation not permitted解决：
+reboot按住Command+R进入恢复模式，进入terminal关闭rootless：csrutil disable 
+如此之后，root便如linux系统中root一样拥有最高权限了
+进入root用户，为${whoami}添加/usr/local文件夹权限（brew所在） chwon -R ${whoami}:wheel /usr/local
+或者使用sudo chown -R ${whoami}:wheel /usr/local
+再执行brew install
+brew update
+之后可以通过brew list查看已经安装的软件
+最后 brew install python
+安装完毕之后，软连接至需要使用的位置即可
