@@ -11,4 +11,4 @@ reboot按住Command+R进入恢复模式，进入terminal关闭rootless：csrutil
 brew update
 之后可以通过brew list查看已经安装的软件
 最后 brew install python
-安装完毕之后，软连接至需要使用的位置即可
+安装完毕之后，软连接至需要使用的位置即可,注意软连接要使用绝对路径
